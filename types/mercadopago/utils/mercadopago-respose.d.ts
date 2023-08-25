@@ -23,8 +23,47 @@ export interface Pagination {
   offset: number;
 }
 
+export type Item = {
+  title: string;
+  description: string;
+  currency_id: string;
+  quantity: number;
+  unit_price: number;
+};
+
+export type Payer = {
+  phone: Record<string, never>;
+  identification: Record<string, never>;
+  address: Record<string, never>;
+};
+
+export type PaymentMethod = {
+  excluded_payment_methods: Record<string, never>[];
+  excluded_payment_types: Record<string, never>[];
+};
+
+export type Shipment = {
+  receiver_address: Record<string, never>;
+};
+
 export class MercadoPagoResponse<K> {
-  body: any;
+  body: {
+    collector_id: number;
+    items: Item[];
+    payer: Payer;
+    back_urls: Record<string, never>;
+    payment_methods: PaymentMethod;
+    client_id: number;
+    marketplace: string;
+    marketplace_fee: number;
+    shipments: Shipment;
+    statement_descriptor: string;
+    date_created: string;
+    id: string;
+    init_point: string;
+    sandbox_init_point: string;
+    metadata: Record<string, never>;
+  };
   response: any;
   status: number;
   idempotency: string;
@@ -45,3 +84,4 @@ export class MercadoPagoResponse<K> {
   /** Get exec options */
   getExecOptions(): K;
 }
+
